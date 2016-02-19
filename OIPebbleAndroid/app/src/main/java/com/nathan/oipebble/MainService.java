@@ -14,9 +14,12 @@ import com.getpebble.android.kit.PebbleKit;
  */
 public class MainService extends Service {
 
-    private BroadcastReceiver dataReceiver = null;
-    private BroadcastReceiver ackReceiver = null;
-    private BroadcastReceiver nackReceiver = null;
+    private BroadcastReceiver shoppingDataReceiver = null;
+    private BroadcastReceiver shoppingAckReceiver = null;
+    private BroadcastReceiver shoppingNackReceiver = null;
+    private BroadcastReceiver notepadDataReceiver = null;
+    private BroadcastReceiver notepadAckReceiver = null;
+    private BroadcastReceiver notepadNackReceiver = null;
 
     @Nullable
     @Override
@@ -27,15 +30,27 @@ public class MainService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        Log.d("OIPebbleService", "Start service, didReceiver=" + (dataReceiver != null));
+        Log.d("OIPebbleService", "Start service, didReceiver=" + (shoppingDataReceiver != null));
 
-        if (dataReceiver == null) {
-            PebbleMessageReceiver rcv = new PebbleMessageReceiver(this, getContentResolver());
+        if (shoppingDataReceiver == null) {
 
-            ackReceiver = PebbleKit.registerReceivedAckHandler(this, new PebbleAckReceiver(rcv));
-            nackReceiver = PebbleKit.registerReceivedNackHandler(this, new PebbleNackReceiver(rcv));
+            ShoppingMessageReceiver rcv = new ShoppingMessageReceiver(this, getContentResolver());
 
-            dataReceiver = PebbleKit.registerReceivedDataHandler(this, rcv);
+            shoppingAckReceiver = PebbleKit.registerReceivedAckHandler(this, new PebbleAckReceiver(rcv, ShoppingMessageReceiver.PEBBLE_OISHOPPING_UUID));
+            shoppingNackReceiver = PebbleKit.registerReceivedNackHandler(this, new PebbleNackReceiver(rcv, ShoppingMessageReceiver.PEBBLE_OISHOPPING_UUID));
+
+            shoppingDataReceiver = PebbleKit.registerReceivedDataHandler(this, rcv);
+
+        }
+
+        if (notepadDataReceiver == null) {
+
+            NotePadMessageReceiver rcv = new NotePadMessageReceiver(this, getContentResolver());
+
+            notepadAckReceiver = PebbleKit.registerReceivedAckHandler(this, new PebbleAckReceiver(rcv, NotePadMessageReceiver.PEBBLE_OINOTEPAD_UUID));
+            notepadNackReceiver = PebbleKit.registerReceivedNackHandler(this, new PebbleNackReceiver(rcv, NotePadMessageReceiver.PEBBLE_OINOTEPAD_UUID));
+
+            notepadDataReceiver = PebbleKit.registerReceivedDataHandler(this, rcv);
 
         }
 
@@ -45,12 +60,23 @@ public class MainService extends Service {
     @Override
     public void onDestroy() {
 
-        unregisterReceiver(dataReceiver);
-        unregisterReceiver(nackReceiver);
-        unregisterReceiver(ackReceiver);
-        dataReceiver = null;
-        nackReceiver = null;
-        ackReceiver = null;
+        if (shoppingDataReceiver != null) {
+            unregisterReceiver(shoppingDataReceiver);
+            unregisterReceiver(shoppingNackReceiver);
+            unregisterReceiver(shoppingAckReceiver);
+            shoppingDataReceiver = null;
+            shoppingNackReceiver = null;
+            shoppingAckReceiver = null;
+        }
+
+        if (notepadDataReceiver != null) {
+            unregisterReceiver(notepadDataReceiver);
+            unregisterReceiver(notepadNackReceiver);
+            unregisterReceiver(notepadAckReceiver);
+            notepadDataReceiver = null;
+            notepadNackReceiver = null;
+            notepadAckReceiver = null;
+        }
 
         super.onDestroy();
     }

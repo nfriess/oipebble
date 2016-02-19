@@ -17,11 +17,11 @@ import java.util.UUID;
 
 /**
  * The main class that is called by PebbleKit when a message is received
- * from a Pebble watch.
+ * from the shopping list app on a Pebble watch.
  */
-public class PebbleMessageReceiver extends PebbleKit.PebbleDataReceiver {
+public class ShoppingMessageReceiver extends PebbleKit.PebbleDataReceiver implements MessageReceiverInterface {
 
-    private static final String LOG_CLASS = "PebbleMessageReceiver";
+    private static final String LOG_CLASS = "ShoppingMessageReceiver";
 
     public static final UUID PEBBLE_OISHOPPING_UUID = UUID.fromString("d7362019-70ac-4b7c-879d-22f07fecce3a");
 
@@ -62,7 +62,7 @@ public class PebbleMessageReceiver extends PebbleKit.PebbleDataReceiver {
     private ArrayList<ShoppingItem> pendingItems;
     private Timer pendingItemsTimer;
 
-    public PebbleMessageReceiver(Context applicationContext, ContentResolver resolver) {
+    public ShoppingMessageReceiver(Context applicationContext, ContentResolver resolver) {
         super(PEBBLE_OISHOPPING_UUID);
         this.applicationContext = applicationContext;
         this.resolver = resolver;
@@ -264,7 +264,7 @@ public class PebbleMessageReceiver extends PebbleKit.PebbleDataReceiver {
             // Spare position...
             dictKey++;
 
-            dictSizeBytes += SIZE_PER_SHOPPING_ITEM;
+            dictSizeBytes += SIZE_PER_SHOPPING_ITEM + name.length();
             if (dictSizeBytes >= PEBBLE_BUFFER_SIZE) {
 
                 // Undo last item
