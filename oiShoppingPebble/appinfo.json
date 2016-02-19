@@ -1,0 +1,25 @@
+{
+  "uuid": "d7362019-70ac-4b7c-879d-22f07fecce3a",
+  "shortName": "Shopping List",
+  "longName": "OI Shopping List Integration",
+  "companyName": "Nathan Friess",
+  "versionLabel": "1.0",
+  "sdkVersion": "3",
+  "targetPlatforms": ["aplite", "basalt", "chalk"],
+  "watchapp": {
+    "watchface": false
+  },
+  "appKeys": {
+    "dummy": 0
+  },
+  "resources": {
+    "media": [
+	{
+	    "menuIcon": true,
+	    "type": "bitmap",
+	    "name": "IMAGE_MENU_ICON",
+	    "file": "mainicon.png"
+	}
+    ]
+  }
+}
