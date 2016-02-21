@@ -77,10 +77,10 @@ void msgwin_show(char *message) {
   window_stack_push(window, true);
 
   if (hideTimer != NULL) {
-    app_timer_reschedule(hideTimer, 3000);
+    app_timer_reschedule(hideTimer, 6000);
   }
   else {
-    hideTimer = app_timer_register(3000, onHideTimeout, NULL);
+    hideTimer = app_timer_register(6000, onHideTimeout, NULL);
   }
 
 }
