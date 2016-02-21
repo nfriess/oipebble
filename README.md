@@ -13,6 +13,8 @@ the OI apps make available.
 - **OIPebbleAndroid**: An adapter app for Android that listens
   for messages from the Pebble apps and interfaces with the OI
   Android apps.
+- **oiNotepadPebble**: The OI Notepad app that runs
+  on a Pebble watch.
 - **oiShoppingPebble**: The OI Shopping List app that runs
   on a Pebble watch.
 
