@@ -6,6 +6,8 @@ static Window *window = NULL;
 static TextLayer *textLayer;
 static AppTimer *hideTimer;
 
+extern uint8_t isRound;
+
 void msgwin_hide();
 
 // -----------------------------------------------
@@ -26,7 +28,12 @@ static void windowLoad(Window *window) {
 
   text_layer_set_font(textLayer, font);
 
-  text_layer_set_text_alignment(textLayer, GTextAlignmentLeft);
+  if (isRound) {
+    text_layer_set_text_alignment(textLayer, GTextAlignmentCenter);
+  }
+  else {
+    text_layer_set_text_alignment(textLayer, GTextAlignmentLeft);
+  }
 
   layer_add_child(window_layer, text_layer_get_layer(textLayer));
 

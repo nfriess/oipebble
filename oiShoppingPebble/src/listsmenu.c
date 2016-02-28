@@ -8,6 +8,7 @@ static MenuLayer *menu = NULL;
 extern int32_t activeShoppingListID;
 extern ShoppingList *allLists;
 extern uint8_t allListsCount;
+extern uint8_t isRound;
 extern GFont font;
 
 extern void comms_getItemList(uint32_t listID);
@@ -70,6 +71,12 @@ static void menuDrawRow(GContext *ctx, const Layer *cell_layer, MenuIndex *cell_
     return;
 
   GRect cell_bounds = layer_get_bounds(cell_layer);
+
+  if (isRound) {
+    // Add some padding so text is not clipped
+    cell_bounds.origin.x += 6;
+    cell_bounds.size.w -= 12;
+  }
 
   graphics_draw_text(ctx, allLists[cell_index->row].name,
 		     font, cell_bounds,

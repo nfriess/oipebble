@@ -14,6 +14,8 @@ uint8_t addItemListCount;
 ShoppingList *allLists;
 uint8_t allListsCount;
 
+uint8_t isRound;
+
 extern void ui_init();
 extern void ui_deinit();
 
@@ -61,8 +63,15 @@ int main(void) {
   memset(activeList, 0, 1*sizeof(ShoppingItem));
 
   strcpy(activeList[0].name, "Loading...");
-  
+
   activeListCount = 1;
+
+  isRound = 0;
+  if (watch_info_get_model() == WATCH_INFO_MODEL_PEBBLE_TIME_ROUND_14 ||
+	watch_info_get_model() == WATCH_INFO_MODEL_PEBBLE_TIME_ROUND_20) {
+
+	isRound = 1;
+  }
 
   init();
 

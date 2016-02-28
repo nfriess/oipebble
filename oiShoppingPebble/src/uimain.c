@@ -17,6 +17,8 @@ extern int32_t activeShoppingListID;
 extern ShoppingItem *activeList;
 extern uint8_t activeListCount;
 
+extern uint8_t isRound;
+
 extern void comms_getItemList(int32_t listID);
 extern void comms_setItemBought(int32_t listID, int32_t itemID);
 extern void comms_setItemToBuy(int32_t listID, int32_t itemID);
@@ -109,6 +111,12 @@ static void menuDrawRow(GContext *ctx, const Layer *cell_layer, MenuIndex *cell_
     return;
 
   GRect cell_bounds = layer_get_bounds(cell_layer);
+
+  if (isRound) {
+    // Add some padding so text is not clipped
+    cell_bounds.origin.x += 6;
+    cell_bounds.size.w -= 12;
+  }
 
   if (activeList[cell_index->row].status == STATUS_BOUGHT) {
 
