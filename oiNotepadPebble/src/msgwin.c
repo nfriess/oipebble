@@ -1,10 +1,14 @@
 #include <pebble.h>
 
+extern uint8_t doneInit;
+
 static Window *window = NULL;
 static TextLayer *textLayer;
 static AppTimer *hideTimer;
 
 void msgwin_hide();
+
+#define MSGWIN_TIMEOUT 6000
 
 // -----------------------------------------------
 // Internal functions
@@ -32,6 +36,10 @@ static void windowLoad(Window *window) {
 
 static void windowUnload(Window *window) {
   text_layer_destroy(textLayer);
+
+  // If this was the initial loading message... then quit now
+  if (!doneInit)
+    window_stack_pop_all(false);
 }
 
 static void onHideTimeout(void *data) {
@@ -75,10 +83,10 @@ void msgwin_show(char *message) {
   window_stack_push(window, true);
 
   if (hideTimer != NULL) {
-    app_timer_reschedule(hideTimer, 6000);
+    app_timer_reschedule(hideTimer, MSGWIN_TIMEOUT);
   }
   else {
-    hideTimer = app_timer_register(6000, onHideTimeout, NULL);
+    hideTimer = app_timer_register(MSGWIN_TIMEOUT, onHideTimeout, NULL);
   }
 
 }

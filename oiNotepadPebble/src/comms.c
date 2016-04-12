@@ -12,11 +12,12 @@
 
 #define DATA_ITEM_START_KEY 100
 
-#define COMMAND_ITEMOUT 10000
+#define COMMAND_ITEMOUT 20000
 #define RECEIVE_ITEMS_ITEMOUT 10000
 
 extern NoteItem *notes;
 extern uint8_t noteCount;
+extern uint8_t doneInit;
 
 extern void ui_refreshItems(int selectPos);
 extern void ui_replaceWithMessage(const char *message);
@@ -161,6 +162,8 @@ static void inboxReceived(DictionaryIterator *iterator, void *context) {
     app_timer_cancel(commandTimer);
     commandTimer = NULL;
   }
+
+  doneInit = 1;
 
   Tuple *cmdTuple = dict_find(iterator, 0);
 

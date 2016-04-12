@@ -4,6 +4,7 @@
 
 NoteItem *notes;
 uint8_t noteCount;
+uint8_t doneInit;
 
 extern void ui_init();
 extern void ui_deinit();
@@ -35,6 +36,8 @@ static void deinit(void) {
 }
 
 int main(void) {
+
+  doneInit = 0;
 
   notes = calloc(1, sizeof(NoteItem));
   memset(notes, 0, 1*sizeof(NoteItem));
