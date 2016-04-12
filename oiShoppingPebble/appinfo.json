@@ -3,7 +3,7 @@
   "shortName": "Shopping List",
   "longName": "OI Shopping List Integration",
   "companyName": "Nathan Friess",
-  "versionLabel": "1.1",
+  "versionLabel": "1.2",
   "sdkVersion": "3",
   "targetPlatforms": ["aplite", "basalt", "chalk"],
   "watchapp": {
