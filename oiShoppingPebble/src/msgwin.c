@@ -8,6 +8,8 @@ static AppTimer *hideTimer;
 
 extern uint8_t isRound;
 
+extern uint8_t doneInit;
+
 void msgwin_hide();
 
 // -----------------------------------------------
@@ -41,6 +43,10 @@ static void windowLoad(Window *window) {
 
 static void windowUnload(Window *window) {
   text_layer_destroy(textLayer);
+
+  // If this was the initial loading message... then quit now
+  if (!doneInit)
+    window_stack_pop_all(false);
 }
 
 static void onHideTimeout(void *data) {

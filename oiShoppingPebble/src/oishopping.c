@@ -16,6 +16,8 @@ uint8_t allListsCount;
 
 uint8_t isRound;
 
+uint8_t doneInit;
+
 extern void ui_init();
 extern void ui_deinit();
 
@@ -46,6 +48,8 @@ static void deinit(void) {
 }
 
 int main(void) {
+
+  doneInit = 0;
 
   if (persist_exists(STORAGE_ACTIVELISTID)) {
     activeShoppingListID = persist_read_int(STORAGE_ACTIVELISTID);

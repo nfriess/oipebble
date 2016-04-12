@@ -35,6 +35,8 @@ extern uint8_t addItemListCount;
 extern ShoppingList *allLists;
 extern uint8_t allListsCount;
 
+extern uint8_t doneInit;
+
 extern void ui_refreshItems(int selectPos);
 extern void ui_replaceWithMessage(const char *message);
 extern void listsmenu_refreshItems();
@@ -363,6 +365,8 @@ static void inboxReceived(DictionaryIterator *iterator, void *context) {
     app_timer_cancel(commandTimer);
     commandTimer = NULL;
   }
+
+  doneInit = 1;
 
   Tuple *cmdTuple = dict_find(iterator, 0);
 
