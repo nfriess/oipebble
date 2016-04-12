@@ -21,7 +21,7 @@
 
 #define DATA_ITEM_START_KEY 100
 
-#define COMMAND_ITEMOUT 10000
+#define COMMAND_ITEMOUT 20000
 #define RECEIVE_ITEMS_ITEMOUT 10000
 
 extern int32_t activeShoppingListID;
